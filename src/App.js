@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
+import SidebarComponent from "./sidebar/sidebar";
+import EditorComponent from "./editor/editor";
 
 import firebase from "firebase";
 
@@ -29,7 +31,12 @@ class App extends Component {
   };
 
   render() {
-    return <div>hello world</div>;
+    return (
+      <div className="app-container">
+        <SidebarComponent></SidebarComponent>
+        <EditorComponent></EditorComponent>
+      </div>
+    );
   }
 }
 

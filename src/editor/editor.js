@@ -8,9 +8,33 @@ import styles from "./styles";
 class EditorComponent extends Component {
   constructor() {
     super();
+    this.state = {
+      text: "",
+      title: "",
+      id: "",
+    };
   }
+
+  updateBody = async (val) => {
+    await this.setState({ text: val });
+    this.update();
+  };
+
+  update = debounce(() => {
+    console.log("UPDATING DATABASE");
+  }, 1500);
+
   render() {
-    return <div>hello from the editor</div>;
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.editorContainer}>
+        <ReactQuill
+          value={this.state.text}
+          onChange={this.updateBody}
+        ></ReactQuill>
+      </div>
+    );
   }
 }
 
