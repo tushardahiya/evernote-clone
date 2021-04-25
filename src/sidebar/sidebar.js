@@ -8,9 +8,79 @@ import SidebarItemComponent from "../sidebarItem/sidebarItem";
 class SidebarComponent extends Component {
   constructor() {
     super();
+    this.state = {
+      addingNote: false,
+      title: null,
+    };
   }
+
+  newNoteBtnClick = () => {
+    this.setState({ title: null, addingNote: !this.state.addingNote });
+    console.log("newbtn clicked");
+  };
+
+  updateTitle = (txt) => {
+    this.setState({ title: txt });
+  };
+
+  newNote = () => {
+    console.log(this.state);
+  };
+
+  selectNote = () => {
+    console.log("SELECT NOTE");
+  };
+
+  deleteNote = () => {
+    console.log("DELETE NOTE");
+  };
+
   render() {
-    return <div>hello from sidebar</div>;
+    const { notes, classes, selectedNoteIndex } = this.props;
+
+    if (notes) {
+      return (
+        <div className={classes.sidebarContainer}>
+          <Button onClick={this.newNoteBtnClick} className={classes.newNoteBtn}>
+            {this.state.addingNote ? "Cancel" : "New Note"}
+          </Button>
+          {this.state.addingNote ? (
+            <div>
+              <input
+                type="text"
+                className={classes.newNoteInput}
+                placeholder="Enter Note title"
+                onKeyUp={(e) => this.updateTitle(e.target.value)}
+              ></input>
+              <Button
+                className={classes.newNoteSubmitBtn}
+                onClick={this.newNote}
+              >
+                Submit Note
+              </Button>
+            </div>
+          ) : null}
+          <List>
+            {notes.map((note, index) => {
+              return (
+                <div key={index}>
+                  <SidebarItemComponent
+                    note={note}
+                    index={index}
+                    selectedNoteIndex={selectedNoteIndex}
+                    selectNote={this.selectNote}
+                    deleteNote={this.deleteNote}
+                  ></SidebarItemComponent>
+                  <Divider></Divider>
+                </div>
+              );
+            })}
+          </List>
+        </div>
+      );
+    } else {
+      return <div>Add a note !</div>;
+    }
   }
 }
 
