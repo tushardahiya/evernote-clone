@@ -34,7 +34,7 @@ const styles = (theme) => ({
     boxSizing: "border-box",
     float: "left",
     overflowX: "hidden",
-    borderRight: "5px solid white",
+    borderRight: "5px solid #87c3ff",
   },
   newNoteInput: {
     width: "100%",
