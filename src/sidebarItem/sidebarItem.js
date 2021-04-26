@@ -22,7 +22,7 @@ class SidebarItemComponent extends Component {
     return (
       <div key={index}>
         <ListItem
-          className={classes.ListItem}
+          className={classes.listItem}
           selected={selectedNoteIndex === index}
           alignItems="flex-start"
         >
@@ -37,7 +37,7 @@ class SidebarItemComponent extends Component {
           </div>
           <DeleteIcon
             onClick={() => this.deleteNote(note)}
-            className={classes.DeleteIcon}
+            className={classes.deleteIcon}
           ></DeleteIcon>
         </ListItem>
       </div>
