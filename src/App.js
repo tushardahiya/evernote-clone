@@ -62,6 +62,25 @@ class App extends Component {
     });
   };
 
+  deleteNote = async (note) => {
+    const noteIndex = this.state.notes.indexOf(note);
+    await this.setState({
+      notes: this.state.notes.filter((_note) => _note !== note),
+    });
+    if (this.state.selectedNoteIndex === noteIndex) {
+      this.setState({ selectedNoteIndex: null, selectNote: null });
+    } else {
+      this.state.notes.length > 1
+        ? this.selectNote(
+            this.state.notes[this.state.selectedNoteIndex - 1],
+            this.state.selectedNoteIndex - 1
+          )
+        : this.setState({ selectedNoteIndex: null, selectNote: null });
+    }
+
+    firebase.firestore().collection("notes").doc(note.id).delete();
+  };
+
   render() {
     return (
       <div className="app-container">
