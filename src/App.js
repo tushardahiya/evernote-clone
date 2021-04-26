@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import SidebarComponent from "./sidebar/sidebar";
 import EditorComponent from "./editor/editor";
+import Welcome from "./Welcome/Welcome";
 
 import firebase from "firebase";
 
@@ -98,7 +99,9 @@ class App extends Component {
             notes={this.state.notes}
             noteUpdate={this.noteUpdate}
           ></EditorComponent>
-        ) : null}
+        ) : (
+          <Welcome />
+        )}
       </div>
     );
   }
