@@ -16,7 +16,7 @@ class EditorComponent extends Component {
   }
 
   updateBody = async (val) => {
-    await this.setState({ text: val });
+    this.setState({ text: val });
     this.update();
   };
 
@@ -25,10 +25,10 @@ class EditorComponent extends Component {
       title: this.state.title,
       body: this.state.text,
     });
-  }, 1500);
+  }, 1000);
 
   updateTitle = async (txt) => {
-    await this.setState({ title: txt });
+    this.setState({ title: txt });
     this.update();
   };
 

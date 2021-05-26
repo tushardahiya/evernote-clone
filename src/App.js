@@ -53,7 +53,7 @@ class App extends Component {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
     const newID = newFromDB.id;
-    await this.setState({ notes: [...this.state.notes, note] });
+    this.setState({ notes: [...this.state.notes, note] });
     const newNoteIndex = this.state.notes.indexOf(
       this.state.notes.filter((note) => note.id === newID)[0]
     );
@@ -65,20 +65,32 @@ class App extends Component {
 
   deleteNote = async (note) => {
     const noteIndex = this.state.notes.indexOf(note);
-    await this.setState({
+    this.setState({
       notes: this.state.notes.filter((_note) => _note !== note),
     });
     if (this.state.selectedNoteIndex === noteIndex) {
       this.setState({ selectedNoteIndex: null, selectNote: null });
     } else {
-      this.state.notes.length > 1
-        ? this.selectNote(
-            this.state.notes[this.state.selectedNoteIndex - 1],
-            this.state.selectedNoteIndex - 1
-          )
-        : this.setState({ selectedNoteIndex: null, selectNote: null });
+      if (this.state.notes.length >= 1) {
+        this.state.selectedNoteIndex < noteIndex
+          ? this.selectNote(
+              this.state.notes[this.state.selectedNoteIndex],
+              this.state.selectedNoteIndex
+            )
+          : this.selectNote(
+              this.state.notes[this.state.selectedNoteIndex - 1],
+              this.state.selectedNoteIndex - 1
+            );
+      } else {
+        this.setState({ selectedNoteIndex: null, selectedNote: null });
+      }
+      // this.state.notes.length > 1
+      //   ? this.selectNote(
+      //       this.state.notes[this.state.selectedNoteIndex - 1],
+      //       this.state.selectedNoteIndex - 1
+      //     )
+      //   : this.setState({ selectedNoteIndex: null, selectNote: null });
     }
-
     firebase.firestore().collection("notes").doc(note.id).delete();
   };
 
